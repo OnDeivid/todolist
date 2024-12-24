@@ -3,7 +3,7 @@ import { auth, signIn, signOut } from "@/auth";
 
 export default async function Home() {
   const session = await auth()
-
+  console.log(session)
   return (
     <section className="flex pt-20">
       <div className="flex flex-col items-center justify-center mx-auto md:h-full px-4 lg:py-0 mt-0">
