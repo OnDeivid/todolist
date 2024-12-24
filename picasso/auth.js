@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client"
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
 import { prismas } from "./prismas";
+export const maxDuration = 60;
 export const config = {
   runtime: "edge",
 };
