@@ -2,9 +2,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
+import { prismas } from "./prismas";
 export const config = {
   runtime: "edge",
 };
+
 
 const prisma = new PrismaClient();
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -13,7 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async session({ session, token, user }) {
 
-      const userDataCars = await prisma.user.findUnique({
+      const userDataCars = await prismas.user.findUnique({
         where: { email: session.user.email },
         select: {
           name: true,
