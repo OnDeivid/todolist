@@ -4,7 +4,7 @@ const client = new MongoClient(process.env.DATABASE_URL);
 
 let clientPromise;
 
-if (process.env.DATABASE_URL === 'development') {
+if (process.env.NODE_ENV === 'development') {
     
     let globalAny = global;
     if (!globalAny._mongoClientPromise) {
