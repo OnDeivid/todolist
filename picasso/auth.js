@@ -9,14 +9,18 @@ import mongoose from "mongoose";
 
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise),
   providers: [
     GitHub
   ],
   session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, user }) {
-      await mongoose.connect("mongodb+srv://tino19950:os4thQQmP80cXplJ@cardupdate.kl88d.mongodb.net/Users?retryWrites=true&w=majority&appName=cardUpdate")
+      await mongoose.connect("mongodb+srv://tino19950:os4thQQmP80cXplJ@cardupdate.kl88d.mongodb.net/Users?retryWrites=true&w=majority&appName=cardUpdate",{
+        ssl: true,
+        tls: true,
+        tlsInsecure: false,
+      })
 
       const data = await Car.findOne()
       token.data = data || {}
