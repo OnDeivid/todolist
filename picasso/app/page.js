@@ -1,8 +1,23 @@
 import { auth, signIn, signOut } from "@/auth";
+import Car from "./models/Cars";
+import mongoose from "mongoose";
 
 
 export default async function Home() {
   const session = await auth()
+  async function createCar() {
+    'use server'
+    try {
+      await Car.create({
+        name: "Deivid's Car",
+        email: "deivid@abv.bg",
+        image: "deivid123",
+        emailVerified: false
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <section className="flex pt-20">
       <div className="flex flex-col items-center justify-center mx-auto md:h-full px-4 lg:py-0 mt-0">
@@ -26,6 +41,16 @@ export default async function Home() {
                 <form className='bg-green-600 w-full h-7' action={async () => {
                   'use server'
                   await signIn('github', { redirectTo: '/' })
+                }}>
+                  <button type="submit">on click</button>
+                </form>
+
+                <label className="block mb-2 text-sm font-medium text-custom-white dark:text-white">ADD to DB</label>
+
+                <form className='bg-green-600 w-full h-7' action={async () => {
+                  'use server'
+                  createCar()
+                  await signOut()
                 }}>
                   <button type="submit">on click</button>
                 </form>

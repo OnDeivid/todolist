@@ -1,29 +1,33 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
-import { prismas } from "./prismas";
-export const maxDuration = 60;
-export const config = {
-  runtime: "edge",
-};
+import { MongoDBAdapter } from '@auth/mongodb-adapter'
+import clientPromise from "./app/utils/something"
+
+import Car from "./app/models/Cars";
+import mongoose from "mongoose";
+// import Users from "./app/models/User";
 
 
-const prisma = new PrismaClient();
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  providers: [GitHub],
+  adapter: MongoDBAdapter(clientPromise),
+  providers: [
+    GitHub
+  ],
+  session: { strategy: 'jwt' },
   callbacks: {
-    async session({ session, token, user }) {
+    async jwt({ token, user }) {
+      await mongoose.connect("mongodb+srv://tino19950:os4thQQmP80cXplJ@cardupdate.kl88d.mongodb.net/Users?retryWrites=true&w=majority&appName=cardUpdate")
 
-      const userDataCars = await prismas.user.findUnique({
-        where: { email: session.user.email },
-        select: {
-          name: true,
-        },
-      });
-      session.user.userDataCars = userDataCars 
+      const data = await Car.findOne()
+      token.data = data || {}
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.user.dataHere = token.data
+      console.log(session)
+
       return session;
     },
   },
-})
+});
