@@ -4,7 +4,7 @@ export default function Card() {
     return (
         <div
             className="block rounded-lg bg-white text-center text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
-            <div className='bg-yellow-500'>
+            <div className='bg-yellow-400'>
                 <h2 className="border-b-2 text-md font-semibold uppercase font-mono text-black border-neutral-100 px-6 py-3 dark:border-white">
                     Task Priority Level: 10
                 </h2>
@@ -41,8 +41,8 @@ export default function Card() {
 
             </div>
             <div
-                className="border-t-2 text-black border-neutral-100 px-6 py-3 text-surface/75 dark:border-white/10 dark:text-neutral-500">
-                2 days ago
+                className="border-t-2 text-black border-neutral-100 px-6 py-3 uppercase text-sm text-surface/75 dark:border-white/10 dark:text-neutral-500">
+                Expired at 00:00 today
             </div>
         </div>
     )
