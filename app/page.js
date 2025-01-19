@@ -4,6 +4,10 @@ import Link from "next/link";
 
 export default async function Home() {
   const session = await auth()
+  async function logout() {
+    'use server'
+    await signOut({ redirectTo: '/' })
+  }
   return (
     <section className="text-gray-600 relative justify-center bg-slate-100 body-font overflow-hidden">
 
@@ -13,7 +17,7 @@ export default async function Home() {
           <h2 className="sm:text-2xl md:text-3xl lg:text-6xl -mt-10 text-yellow-400 uppercase font-serif pb-2">Let’s get those tasks done—are you ready?</h2>
           <p className="sm:text-lg md:text-2xl lg:text-3xl text-yellow-500" >Let me assist you in achieving all your goals.</p>
           <p className="sm:text-md md:text-md lg:text-xl text-yellow-500 font-medium" >Engage your family to assist them while also helping yourself to beat procrastination.</p>
-          <div className="bg-green-300 w-40 mt-10 text-white pt-2 pb-2 text-center rounded-lg">
+          <div onClick={logout} className="bg-green-300 cursor-pointer w-40 mt-10 text-white pt-2 pb-2 text-center rounded-lg">
             {session?.user ?
               <Link href={'Login'} className="text-center uppercase text-customGray font-bold">Check Tasks</Link>
               :
